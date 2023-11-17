@@ -1,0 +1,30 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: api-peliculas-deployment
+  labels:
+    app: api-peliculas
+    version: "1.0"
+spec:
+  replicas: 10
+  selector:
+    matchLabels:
+      app: api-peliculas
+  template:
+    metadata:
+      labels:
+        app: api-peliculas
+        version: "1.0"
+    spec:
+      containers:
+      - name: api-peliculas
+        image: jaacevedos/api-peliculas
+        ports:
+          - name: http-server
+            containerPort: 5000
+        env:
+        - name: DATABASE_URL
+          valueFrom:
+            configMapKeyRef:
+              name: api-configmap
+              key: db-url

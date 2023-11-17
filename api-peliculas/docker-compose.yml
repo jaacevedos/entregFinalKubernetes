@@ -1,0 +1,14 @@
+version: '3'
+services:
+  flask-app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: flask-app
+    ports:
+      - "5000:5000"
+    environment:
+      - FLASK_APP=entrypoint:app
+      - FLASK_ENV=development
+      - APP_SETTINGS_MODULE=config.default
+    command: flask run --host 0.0.0.0
